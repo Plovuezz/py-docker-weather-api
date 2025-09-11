@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 def validate(smth: Any) -> None:
     if smth is None:
-        print(f"Error occurred")
+        print("Error occurred")
         sys.exit(1)
 
 
@@ -29,8 +29,8 @@ def get_weather() -> None:
     url = f"https://api.weatherapi.com/v1/current.json?key={api_key}&q={q_param}"
 
     try:
-        r = requests.get(url)
-        data = r.json()
+        req = requests.get(url)
+        data = req.json()
     except RequestException as e:
         print(f"Error occurred: {e}")
         sys.exit(1)
