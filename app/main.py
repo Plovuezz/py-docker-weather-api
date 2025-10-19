@@ -17,7 +17,7 @@ def get_weather() -> None:
     load_dotenv()
 
     api_key = os.environ.get("API_KEY")
-    q_param = os.environ.get("Q_PARAM")
+    q_param = "Paris"
 
     if not api_key:
         print("API key not found. Please set _API_KEY in .env")
@@ -29,31 +29,39 @@ def get_weather() -> None:
     url = f"https://api.weatherapi.com/v1/current.json?key={api_key}&q={q_param}"
 
     try:
-        req = requests.get(url)
-        data = req.json()
+        response = requests.get(url)
+        data = response.json()
     except RequestException as e:
         print(f"Error occurred: {e}")
         sys.exit(1)
 
-    location = data.get("location")
-    validate(location)
-    current = data.get("current")
-    validate(current)
+    if response.status_code != 200:
+        print(f"Error occurred")
+        sys.exit(1)
 
-    city = location.get("name")
-    validate(city)
+    try:
+        location = data.get("location")
+        validate(location)
+        current = data.get("current")
+        validate(current)
 
-    country = location.get("country")
-    validate(country)
+        city = location.get("name")
+        validate(city)
 
-    time = location.get("localtime")
-    validate(time)
+        country = location.get("country")
+        validate(country)
 
-    temperature = current.get("temp_c")
-    validate(temperature)
+        time = location.get("localtime")
+        validate(time)
 
-    condition = current.get("condition").get("text")
-    validate(condition)
+        temperature = current.get("temp_c")
+        validate(temperature)
+
+        condition = current.get("condition").get("text")
+        validate(condition)
+    except AttributeError:
+        print(f"Error occurred: {e}")
+        sys.exit(1)
 
     print(f"{country}/{city} {time} Weather: {temperature} {condition}")
 
