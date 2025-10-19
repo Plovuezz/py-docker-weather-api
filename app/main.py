@@ -60,7 +60,7 @@ def get_weather() -> None:
         condition = current.get("condition").get("text")
         validate(condition)
     except AttributeError:
-        print(f"Error occurred: {e}")
+        print(f"Error occurred")
         sys.exit(1)
 
     print(f"{country}/{city} {time} Weather: {temperature} {condition}")
