@@ -36,7 +36,7 @@ def get_weather() -> None:
         sys.exit(1)
 
     if response.status_code != 200:
-        print(f"Error occurred")
+        print("Error occurred")
         sys.exit(1)
 
     try:
@@ -60,7 +60,7 @@ def get_weather() -> None:
         condition = current.get("condition").get("text")
         validate(condition)
     except AttributeError:
-        print(f"Error occurred")
+        print("Error occurred")
         sys.exit(1)
 
     print(f"{country}/{city} {time} Weather: {temperature} {condition}")
