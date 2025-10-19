@@ -6,6 +6,8 @@ import requests
 from requests import RequestException
 from dotenv import load_dotenv
 
+Q_PARAM = "Paris"
+
 
 def validate(smth: Any) -> None:
     if smth is None:
@@ -17,16 +19,15 @@ def get_weather() -> None:
     load_dotenv()
 
     api_key = os.environ.get("API_KEY")
-    q_param = "Paris"
 
     if not api_key:
         print("API key not found. Please set _API_KEY in .env")
         sys.exit(1)
-    if not q_param:
+    if not Q_PARAM:
         print("Q parameter not found. Please set Q_PARAM in .env")
         sys.exit(1)
 
-    url = f"https://api.weatherapi.com/v1/current.json?key={api_key}&q={q_param}"
+    url = f"https://api.weatherapi.com/v1/current.json?key={api_key}&q={Q_PARAM}"
 
     try:
         response = requests.get(url)
